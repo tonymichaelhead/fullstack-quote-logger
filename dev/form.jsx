@@ -13,6 +13,7 @@ class Form extends React.Component {
         this.changeHandlerName = this.changeHandlerName.bind(this);
         this.changeHandlerQuote = this.changeHandlerQuote.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.replaceQuote = this.replaceQuote.bind(this);
     }
 
     changeHandlerName(event) {
@@ -50,14 +51,36 @@ class Form extends React.Component {
         })
     }
 
+    replaceQuote(event) {
+        //send put request to change last quote
+        event.preventDefault();
+        
+        axios.put('/quotes', {
+            name: this.state.name,
+            quote: this.state.quote
+        })
+        .then(response => {
+            console.log('the axios put response is ', response)
+        //when that finishes,
+        //invoke this.props.getQuotes();
+            this.props.getQuotes();
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
     render() {
         return (
             <div>
+                <h1>Add a quote</h1>
                 <form onSubmit={this.handleSubmit}>
                     <input onChange={this.changeHandlerName} type="text" placeholder="name" name="name"></input>
                     <input onChange={this.changeHandlerQuote} type="text" placeholder="quote" name="quote"></input>
                     <button type="submit">Submit</button>
                 </form>
+                <h1>Replace the last quote</h1>
+                <button id="update" onClick={this.replaceQuote}>Replace!</button>
             </div>
         )
     }

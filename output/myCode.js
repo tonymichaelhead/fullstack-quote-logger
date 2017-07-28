@@ -23141,6 +23141,7 @@ var Form = function (_React$Component) {
         _this.changeHandlerName = _this.changeHandlerName.bind(_this);
         _this.changeHandlerQuote = _this.changeHandlerQuote.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.replaceQuote = _this.replaceQuote.bind(_this);
         return _this;
     }
 
@@ -23186,11 +23187,36 @@ var Form = function (_React$Component) {
             });
         }
     }, {
+        key: "replaceQuote",
+        value: function replaceQuote(event) {
+            var _this5 = this;
+
+            //send put request to change last quote
+            event.preventDefault();
+
+            _axios2.default.put('/quotes', {
+                name: this.state.name,
+                quote: this.state.quote
+            }).then(function (response) {
+                console.log('the axios put response is ', response);
+                //when that finishes,
+                //invoke this.props.getQuotes();
+                _this5.props.getQuotes();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
                 "div",
                 null,
+                _react2.default.createElement(
+                    "h1",
+                    null,
+                    "Add a quote"
+                ),
                 _react2.default.createElement(
                     "form",
                     { onSubmit: this.handleSubmit },
@@ -23201,6 +23227,16 @@ var Form = function (_React$Component) {
                         { type: "submit" },
                         "Submit"
                     )
+                ),
+                _react2.default.createElement(
+                    "h1",
+                    null,
+                    "Replace the last quote"
+                ),
+                _react2.default.createElement(
+                    "button",
+                    { id: "update", onClick: this.replaceQuote },
+                    "Replace!"
                 )
             );
         }
