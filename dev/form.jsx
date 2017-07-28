@@ -43,6 +43,7 @@ class Form extends React.Component {
         })
         .then(response => {
             console.log('the axios post response is ', response)
+            this.props.getQuotes();
         })
         .catch(error => {
             console.log(error);

@@ -23171,6 +23171,8 @@ var Form = function (_React$Component) {
     }, {
         key: "handleSubmit",
         value: function handleSubmit(event) {
+            var _this4 = this;
+
             event.preventDefault();
 
             _axios2.default.post('/quotes', {
@@ -23178,6 +23180,7 @@ var Form = function (_React$Component) {
                 quote: this.state.quote
             }).then(function (response) {
                 console.log('the axios post response is ', response);
+                _this4.props.getQuotes();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -24120,35 +24123,28 @@ var List = function (_React$Component) {
         _this.state = {
             //quotes: this.props.quotes
             quotes: [{ name: 'tony', quote: 'hey!!' }, { name: 'Doyle', quote: 'sup g' }]
-        };
-        _this.getQuotes = _this.getQuotes.bind(_this);
-        return _this;
+            // this.getQuotes = this.getQuotes.bind(this);
+        };return _this;
     }
 
     //create function to get messages when list is rendered
+    // getQuotes() {
+    //     axios.get('/quotes')
+    //         .then(response => {
+    //             console.log('Successfully fetched!!', response);
+    //             this.setState({ quotes: response.data });
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // }
 
+    // //onComponentDidMount( send get request and render data to list)
+    // componentDidMount() {
+    //     this.getQuotes();
+    // }
 
     _createClass(List, [{
-        key: "getQuotes",
-        value: function getQuotes() {
-            var _this2 = this;
-
-            _axios2.default.get('/quotes').then(function (response) {
-                console.log('Successfully fetched!!', response);
-                _this2.setState({ quotes: response.data });
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-
-        //onComponentDidMount( send get request and render data to list)
-
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.getQuotes();
-        }
-    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -24205,6 +24201,10 @@ var _list = __webpack_require__(211);
 
 var _list2 = _interopRequireDefault(_list);
 
+var _axios = __webpack_require__(85);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24226,6 +24226,7 @@ var App = function (_React$Component) {
         };
 
         _this.setItems = _this.setItems.bind(_this);
+        _this.getQuotes = _this.getQuotes.bind(_this);
         return _this;
     }
 
@@ -24234,6 +24235,26 @@ var App = function (_React$Component) {
         value: function setItems(item) {
             this.state.quotes.push(item);
             this.setState({ quotes: this.state.quotes });
+        }
+    }, {
+        key: "getQuotes",
+        value: function getQuotes() {
+            var _this2 = this;
+
+            _axios2.default.get('/quotes').then(function (response) {
+                console.log('Successfully fetched!!', response);
+                _this2.setState({ quotes: response.data });
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        //onComponentDidMount( send get request and render data to list)
+
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.getQuotes();
         }
     }, {
         key: "render",
@@ -24248,7 +24269,7 @@ var App = function (_React$Component) {
                     this.props.greetTarget,
                     "!"
                 ),
-                _react2.default.createElement(_form2.default, null),
+                _react2.default.createElement(_form2.default, { getQuotes: this.getQuotes }),
                 _react2.default.createElement(_list2.default, { quotes: this.state.quotes })
             );
         }
