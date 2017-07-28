@@ -24157,7 +24157,7 @@ var List = function (_React$Component) {
                 _react2.default.createElement(
                     "ul",
                     null,
-                    this.state.quotes.map(function (quote, index) {
+                    this.props.quotes.map(function (quote, index) {
                         return _react2.default.createElement(
                             "li",
                             { key: index },
@@ -24219,10 +24219,23 @@ var App = function (_React$Component) {
     function App(props) {
         _classCallCheck(this, App);
 
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+        _this.state = {
+            quotes: [{ name: 'Tonz', quote: 'First message ay' }]
+        };
+
+        _this.setItems = _this.setItems.bind(_this);
+        return _this;
     }
 
     _createClass(App, [{
+        key: "setItems",
+        value: function setItems(item) {
+            this.state.quotes.push(item);
+            this.setState({ quotes: this.state.quotes });
+        }
+    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -24236,7 +24249,7 @@ var App = function (_React$Component) {
                     "!"
                 ),
                 _react2.default.createElement(_form2.default, null),
-                _react2.default.createElement(_list2.default, null)
+                _react2.default.createElement(_list2.default, { quotes: this.state.quotes })
             );
         }
     }]);

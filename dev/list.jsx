@@ -33,7 +33,7 @@ class List extends React.Component {
     render(){
         return (
             <div>
-                <ul>{this.state.quotes.map((quote, index) => <li key={index}>{quote.name} : {quote.quote}</li>)}</ul>
+                <ul>{this.props.quotes.map((quote, index) => <li key={index}>{quote.name} : {quote.quote}</li>)}</ul>
             </div>
         )
     }
