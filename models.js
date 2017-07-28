@@ -6,8 +6,6 @@ let Quote = db.define('quotes', {
     quote: { type: Sequelize.STRING, allowNull: false }
 })
 
-Quote.create({ name: 'T-mac', quote: 'you betta check yoself'});
-
 Quote.sync();
 
 module.exports =Quote;

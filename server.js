@@ -16,8 +16,7 @@ app.use(express.static('output'))
 app.use(bodyParser.json());
 
 app.get('/quotes', (req, res) => {
-   Quote.findAll({}).then(result => {
-    console.log('the GET result is ', result);   
+   Quote.findAll({}).then(result => {  
     res.send(result);
     //var text = {result.map(item => item.)}
    }) 

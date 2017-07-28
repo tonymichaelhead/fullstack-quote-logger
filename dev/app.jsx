@@ -3,8 +3,12 @@ import ReactDOM from "react-dom";
 import Form from "./form.jsx";
 import List from "./list.jsx";
 
-var App = React.createClass({
-    render: function() {
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    
+    render() {
         return (
             <div>
                 <p>Hello, {this.props.greetTarget}!</p>
@@ -13,6 +17,6 @@ var App = React.createClass({
             </div>
         );
     }
-});
+};
 
 export default App;
