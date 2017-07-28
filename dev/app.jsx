@@ -12,16 +12,11 @@ class App extends React.Component {
             quotes: [{name: 'Tonz', quote: 'First message ay'}]
         }
 
-        this.setItems = this.setItems.bind(this);
         this.getQuotes = this.getQuotes.bind(this);
-    }
-    
-    setItems(item) {
-       this.state.quotes.push(item);
-       this.setState({ quotes: this.state.quotes }) 
     }
 
     getQuotes() {
+        console.log('getQuotes is firing')
         axios.get('/quotes')
             .then(response => {
                 console.log('Successfully fetched!!', response);

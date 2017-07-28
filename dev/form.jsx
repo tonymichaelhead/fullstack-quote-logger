@@ -14,6 +14,7 @@ class Form extends React.Component {
         this.changeHandlerQuote = this.changeHandlerQuote.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.replaceQuote = this.replaceQuote.bind(this);
+        this.deleteQuote = this.deleteQuote.bind(this);
     }
 
     changeHandlerName(event) {
@@ -43,7 +44,7 @@ class Form extends React.Component {
             quote: this.state.quote
         })
         .then(response => {
-            console.log('the axios post response is ', response)
+            console.log('Inside post.....', response)
             this.props.getQuotes();
         })
         .catch(error => {
@@ -59,15 +60,25 @@ class Form extends React.Component {
             name: this.state.name,
             quote: this.state.quote
         })
-        .then(response => {
-            console.log('the axios put response is ', response)
-        //when that finishes,
-        //invoke this.props.getQuotes();
-            this.props.getQuotes();
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(response => {
+                console.log('the next method should rerender....')
+                this.props.getQuotes();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    deleteQuote(event) {
+        event.preventDefault();
+            
+        axios.delete('/quotes')
+            .then(response => {
+                this.props.getQuotes();
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     render() {
@@ -80,7 +91,9 @@ class Form extends React.Component {
                     <button type="submit">Submit</button>
                 </form>
                 <h1>Replace the last quote</h1>
-                <button id="update" onClick={this.replaceQuote}>Replace!</button>
+                <button onClick={this.replaceQuote}>Replace!</button>
+                <h1>Don't you dare click that button to DELETE EVERYTHING</h1>
+                <button onClick={this.deleteQuote}>DELETE</button>
             </div>
         )
     }

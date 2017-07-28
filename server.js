@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.get('/quotes', (req, res) => {
    Quote.findAll({}).then(result => {  
-    res.send(result);
+    res.status(200).send(result);
     //var text = {result.map(item => item.)}
    }) 
 })
@@ -36,6 +36,39 @@ app.get('/quotes', (req, res) => {
 
 app.post('/quotes', (req, res) => {
     Quote.create({ name: req.body.name, quote: req.body.quote });
-    res.send('POST request accepted');
+    res.status(201).send('POST request accepted');
+
+})
+
+app.put('/quotes', (req, res) => {
+    Quote.findAll({
+        limit: 1,
+        where:{},
+        order: [['createdAt', 'DESC']]
+    })
+    .then(entries => {
+        //update entry
+        console.log(entries[0]);
+        Quote.update(
+            {name: req.body.name, quote: req.body.quote}, {where: { id: entries[0].dataValues.id } }
+        );
+        res.status(201).send('Accepted your PUT request');
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
+
+app.delete('/quotes', (req, res) => {
+    Quote.findAll()
+        .then(entries => {
+            entries.forEach(entry => entry.destroy());
+           // console.log(entries)
+            //entries.destroy();
+            res.status(200).send('Finished deleting!');
+        })
+        .catch(err => {
+            console.log(err)
+        })
 })
 

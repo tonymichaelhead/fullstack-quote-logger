@@ -23142,6 +23142,7 @@ var Form = function (_React$Component) {
         _this.changeHandlerQuote = _this.changeHandlerQuote.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.replaceQuote = _this.replaceQuote.bind(_this);
+        _this.deleteQuote = _this.deleteQuote.bind(_this);
         return _this;
     }
 
@@ -23180,7 +23181,7 @@ var Form = function (_React$Component) {
                 name: this.state.name,
                 quote: this.state.quote
             }).then(function (response) {
-                console.log('the axios post response is ', response);
+                console.log('Inside post.....', response);
                 _this4.props.getQuotes();
             }).catch(function (error) {
                 console.log(error);
@@ -23198,10 +23199,21 @@ var Form = function (_React$Component) {
                 name: this.state.name,
                 quote: this.state.quote
             }).then(function (response) {
-                console.log('the axios put response is ', response);
-                //when that finishes,
-                //invoke this.props.getQuotes();
+                console.log('the next method should rerender....');
                 _this5.props.getQuotes();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }, {
+        key: "deleteQuote",
+        value: function deleteQuote(event) {
+            var _this6 = this;
+
+            event.preventDefault();
+
+            _axios2.default.delete('/quotes').then(function (response) {
+                _this6.props.getQuotes();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -23235,8 +23247,18 @@ var Form = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     "button",
-                    { id: "update", onClick: this.replaceQuote },
+                    { onClick: this.replaceQuote },
                     "Replace!"
+                ),
+                _react2.default.createElement(
+                    "h1",
+                    null,
+                    "Don't you dare click that button to DELETE EVERYTHING"
+                ),
+                _react2.default.createElement(
+                    "button",
+                    { onClick: this.deleteQuote },
+                    "DELETE"
                 )
             );
         }
@@ -24261,22 +24283,16 @@ var App = function (_React$Component) {
             quotes: [{ name: 'Tonz', quote: 'First message ay' }]
         };
 
-        _this.setItems = _this.setItems.bind(_this);
         _this.getQuotes = _this.getQuotes.bind(_this);
         return _this;
     }
 
     _createClass(App, [{
-        key: "setItems",
-        value: function setItems(item) {
-            this.state.quotes.push(item);
-            this.setState({ quotes: this.state.quotes });
-        }
-    }, {
         key: "getQuotes",
         value: function getQuotes() {
             var _this2 = this;
 
+            console.log('getQuotes is firing');
             _axios2.default.get('/quotes').then(function (response) {
                 console.log('Successfully fetched!!', response);
                 _this2.setState({ quotes: response.data });
